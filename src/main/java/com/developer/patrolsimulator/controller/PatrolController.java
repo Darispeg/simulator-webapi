@@ -3,7 +3,6 @@ package com.developer.patrolsimulator.controller;
 import com.developer.patrolsimulator.db.entities.MapEntity;
 import com.developer.patrolsimulator.db.entities.PatrolsEntity;
 import com.developer.patrolsimulator.db.entities.UserEntity;
-import com.developer.patrolsimulator.model.MapResponse;
 import com.developer.patrolsimulator.model.MappingModelResponseService;
 import com.developer.patrolsimulator.model.PatchRequest;
 import com.developer.patrolsimulator.model.PatrolResponse;
@@ -27,7 +26,6 @@ import java.io.InputStream;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
