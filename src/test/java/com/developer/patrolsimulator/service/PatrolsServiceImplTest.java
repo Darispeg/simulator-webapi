@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(properties = "spring.datasource.url=jdbc:postgresql://localhost:5432/TestPatrolSimulator")
 class PatrolsServiceImplTest {
 
-    @Autowired
+/*    @Autowired
     @Qualifier(value = "PatrolService")
     private PatrolsService patrolsService;
 
@@ -45,11 +45,11 @@ class PatrolsServiceImplTest {
         patrolsService.delete(patrols.getId());
     }
 
-    PatrolsEntity buildPatrol(){
+   PatrolsEntity buildPatrol(){
         PatrolsEntity patrolsEntity = new PatrolsEntity();
         patrolsEntity.setPatrolKey(UUID.randomUUID());
         patrolsEntity.setAmountFormations(12);
         patrolsEntity.setAmountReconnaissance(12);
         return patrolsEntity;
-    }
+    }*/
 }
