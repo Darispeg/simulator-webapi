@@ -114,4 +114,40 @@ public class MappingModelResponseService {
         }
         return mapResponse;
     }
+
+    public PatrolTaskResponse buildPatrolTask(PatrolTaskEntity taskEntity){
+        PatrolTaskResponse taskResponse = new PatrolTaskResponse();
+        taskResponse.setOUTPUT(taskEntity.isOutput());
+        taskResponse.setPRI(taskEntity.isPri());
+        taskResponse.setPC(taskEntity.isPc());
+        taskResponse.setCOLUMN(taskEntity.isFormation());
+        taskResponse.setPP(taskEntity.isPp());
+        taskResponse.setPX(taskEntity.isPx());
+        taskResponse.setBOX_PX(taskEntity.isBoxPx());
+        taskResponse.setPRO_PX(taskEntity.isProPx());
+        taskResponse.setPRO(taskEntity.isPro());
+        taskResponse.setCLOVER(taskEntity.isClover());
+        taskResponse.setPD(taskEntity.isPd());
+        taskResponse.setTARGET(taskEntity.isTarget());
+        taskResponse.setPRDO(taskEntity.isPrdo());
+        return taskResponse;
+    }
+
+    public PatrolTaskEntity buildPatrolTaskEntity(PatrolTaskRequest task){
+        PatrolTaskEntity entity = new PatrolTaskEntity();
+        entity.setOutput(task.isOUTPUT());
+        entity.setPri(task.isPRI());
+        entity.setPc(task.isPC());
+        entity.setFormation(task.isCOLUMN());
+        entity.setPp(task.isPP());
+        entity.setPx(task.isPX());
+        entity.setBoxPx(task.isBOX_PX());
+        entity.setProPx(task.isPRO_PX());
+        entity.setPro(task.isPRO());
+        entity.setClover(task.isCLOVER());
+        entity.setPd(task.isPD());
+        entity.setTarget(task.isTARGET());
+        entity.setPrdo(task.isPRDO());
+        return entity;
+    }
 }

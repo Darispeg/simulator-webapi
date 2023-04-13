@@ -2,11 +2,9 @@ package com.developer.patrolsimulator.db.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -48,6 +46,10 @@ public class PatrolsEntity {
     @OneToOne(mappedBy = "patrolsEntity")
     @JsonIgnoreProperties("patrolsEntity")
     private RecognitionResultEntity recognitionResultEntity;
+
+    @OneToOne(mappedBy = "patrolsEntity")
+    @JsonIgnoreProperties("patrolsEntity")
+    private PatrolTaskEntity taskEntity;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "fk_user")

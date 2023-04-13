@@ -16,6 +16,7 @@ public class PatrolResponse {
     private int totalSeconds;
     private ResultResponse result;
     private RecognitionResponse recognition;
+    private PatrolTaskResponse taskResponse;
     private String username;
     private String map;
 }
