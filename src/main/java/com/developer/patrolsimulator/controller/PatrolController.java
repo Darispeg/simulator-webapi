@@ -6,6 +6,7 @@ import com.developer.patrolsimulator.db.entities.UserEntity;
 import com.developer.patrolsimulator.model.MappingModelResponseService;
 import com.developer.patrolsimulator.model.PatchRequest;
 import com.developer.patrolsimulator.model.PatrolResponse;
+import com.developer.patrolsimulator.model.UpdatePatrolRequest;
 import com.developer.patrolsimulator.service.MapService;
 import com.developer.patrolsimulator.service.PatrolsService;
 import com.developer.patrolsimulator.service.UserService;
@@ -112,5 +113,16 @@ public class PatrolController {
     private PatrolsEntity applyPatchToPatrol(JsonPatch patch, PatrolsEntity targetPatrol) throws JsonPatchException, JsonProcessingException {
         JsonNode patched = patch.apply(objectMapper.convertValue(targetPatrol, JsonNode.class));
         return objectMapper.treeToValue(patched, PatrolsEntity.class);
+    }
+
+    @PutMapping("/{patrolKey}")
+    public boolean updateTime(@PathVariable UUID patrolKey, @RequestBody UpdatePatrolRequest request){
+        PatrolsEntity entity = _patrolService.getByPatrolKey(patrolKey);
+        if (entity != null){
+            entity.setTotalSeconds(request.getTime());
+            _patrolService.save(entity);
+            return true;
+        }
+        return false;
     }
 }
