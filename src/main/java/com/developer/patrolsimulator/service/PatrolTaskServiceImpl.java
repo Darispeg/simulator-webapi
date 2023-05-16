@@ -39,6 +39,9 @@ public class PatrolTaskServiceImpl extends GenericServiceImpl<PatrolTaskEntity, 
         Optional<PatrolsEntity> patrolEntity = patrolRepository.findByPatrolKey(patrolKey);
         if (patrolEntity.isPresent()){
             patrolEntity.get().setQualification(calculatePatrolScore(taskEntity) * 10);
+            patrolEntity.get().setTaskEntity(entity);
+            taskEntity.setPatrolsEntity(patrolEntity.get());
+            getDao().save(taskEntity);
             patrolRepository.save(patrolEntity.get());
         }
         return taskEntity;
@@ -53,7 +56,6 @@ public class PatrolTaskServiceImpl extends GenericServiceImpl<PatrolTaskEntity, 
         score = (taskEntity.isTarget()) ? score + 1 : score;
         score = (taskEntity.isPrdo()) ? score + 1 : score;
         score = score / 6;
-        System.out.println(score);
         return score;
     }
 
@@ -67,7 +69,6 @@ public class PatrolTaskServiceImpl extends GenericServiceImpl<PatrolTaskEntity, 
         outputScore = (taskEntity.isBoxPx()) ? outputScore + 1 : outputScore;
         outputScore = (taskEntity.isProPx()) ? outputScore + 1 : outputScore;
         outputScore = outputScore / 7;
-        System.out.println(outputScore);
         return outputScore;
     }
 }

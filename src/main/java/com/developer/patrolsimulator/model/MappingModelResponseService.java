@@ -67,8 +67,13 @@ public class MappingModelResponseService {
         }
         if (entity.getRecognitionEntity() != null)
             patrolResponse.setRecognition(buildRecognition(entity.getRecognitionEntity()));
+
         if (entity.getRecognitionResultEntity() != null)
             patrolResponse.setResult(buildResult(entity.getRecognitionResultEntity()));
+
+        if(entity.getTaskEntity() != null)
+            patrolResponse.setTaskResponse(buildPatrolTask(entity.getTaskEntity()));
+
         return patrolResponse;
     }
 

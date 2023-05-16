@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://6463cd1ab550f106ff658550--iridescent-cactus-a57f82.netlify.app/")
 @RequestMapping(value = "/api/v1/patrols")
 public class PatrolController {
     @Autowired
