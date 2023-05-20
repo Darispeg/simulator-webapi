@@ -7,11 +7,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.session.SessionManagementFilter;
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Bean
+    /*@Bean
     CorsFilter corsFilter() {
         CorsFilter filter = new CorsFilter();
         return filter;
@@ -41,5 +41,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/oauth/token").permitAll()
                 .antMatchers("/admin/*").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("api/v1/users/*").access("hasRole('ROLE_USER')");
-    }
+    }*/
 }
