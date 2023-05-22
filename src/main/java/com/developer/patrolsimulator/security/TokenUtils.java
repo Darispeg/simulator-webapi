@@ -15,15 +15,14 @@ public class TokenUtils {
 
     private final static SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-    public static String createToken(String name, String email){
+    public static String createToken(UserDetailImpl userDetail){
         long expirationTime = ACCESS_TOKEN_VALIDITY_SECONDS * 1000;
         Date expirationDate = new Date(System.currentTimeMillis() + expirationTime);
         System.out.println(key.getEncoded());
         Map<String, Object> extra = new HashMap<>();
-        extra.put("name", name);
-        extra.put("role", "ROL_ADMIN");
+        extra.put("user", userDetail);
         return Jwts.builder()
-                .setSubject(email)
+                .setSubject(userDetail.getUsername())
                 .setExpiration(expirationDate)
                 .addClaims(extra)
                 .signWith(key)

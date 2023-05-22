@@ -7,6 +7,7 @@ import com.developer.patrolsimulator.model.MappingModelResponseService;
 import com.developer.patrolsimulator.model.PatchRequest;
 import com.developer.patrolsimulator.model.PatrolResponse;
 import com.developer.patrolsimulator.model.UpdatePatrolRequest;
+import com.developer.patrolsimulator.repository.UserRepository;
 import com.developer.patrolsimulator.service.MapService;
 import com.developer.patrolsimulator.service.PatrolsService;
 import com.developer.patrolsimulator.service.UserService;
@@ -18,6 +19,7 @@ import com.github.fge.jsonpatch.JsonPatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -27,6 +29,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -38,6 +41,9 @@ public class PatrolController {
 
     @Autowired
     private MapService _mapService;
+
+    @Autowired
+    private UserRepository _userRepository;
 
     @Autowired
     private UserService _userService;
@@ -66,15 +72,8 @@ public class PatrolController {
         return ResponseEntity.ok(_patrolService.getAllPatrolsByUserEntity(userKey));
     }
 
-    @PostMapping
-    public ResponseEntity<PatrolsEntity> save(@RequestBody PatrolsEntity entity){
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/patrols/save").toUriString());
-        entity.setPatrolKey(UUID.randomUUID());
-        return ResponseEntity.created(uri).body(_patrolService.save(entity));
-    }
-
-    @PostMapping("/users/{userKey}/maps/{mapKey}")
-    public ResponseEntity<PatrolsEntity> savePatrol(@PathVariable UUID userKey, @PathVariable UUID mapKey, @RequestBody PatrolsEntity entity){
+    @PostMapping("/maps/{mapKey}")
+    public ResponseEntity<PatrolsEntity> savePatrol(Authentication authentication, @PathVariable UUID mapKey, @RequestBody PatrolsEntity entity){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/patrol/save").toUriString());
         entity.setPatrolKey(UUID.randomUUID());
         MapEntity map = _mapService.getByMapKey(mapKey);
@@ -84,11 +83,15 @@ public class PatrolController {
             entity.setMapEntity(map);
         }
 
-        UserEntity user = _userService.getByUserKey(userKey);
-        if (user != null)
+        Optional<UserEntity> user = null;
+
+        if (authentication != null)
+            user = _userRepository.findOneByUsername(authentication.getName());
+
+        if (user.isPresent())
         {
-            user.getPatrols().add(entity);
-            entity.setUserEntity(user);
+            user.get().getPatrols().add(entity);
+            entity.setUserEntity(user.get());
         }
 
         return ResponseEntity.created(uri).body(_patrolService.save(entity));
