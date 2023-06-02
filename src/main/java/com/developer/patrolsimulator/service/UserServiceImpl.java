@@ -3,7 +3,10 @@ package com.developer.patrolsimulator.service;
 import com.developer.patrolsimulator.db.entities.UserEntity;
 import com.developer.patrolsimulator.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,6 +23,13 @@ public class UserServiceImpl extends GenericServiceImpl<UserEntity, Long> implem
     @Override
     public JpaRepository<UserEntity, Long> getDao() {
         return userRepository;
+    }
+
+    @Override
+    public UserEntity createUser(UserEntity userEntity) {
+        userEntity.setPassword(new BCryptPasswordEncoder().encode(userEntity.getPassword()));
+        UserEntity _new = userRepository.save(userEntity);
+        return _new;
     }
 
     @Override

@@ -3,10 +3,7 @@ package com.developer.patrolsimulator.controller;
 import com.developer.patrolsimulator.db.entities.MapEntity;
 import com.developer.patrolsimulator.db.entities.PatrolsEntity;
 import com.developer.patrolsimulator.db.entities.UserEntity;
-import com.developer.patrolsimulator.model.MappingModelResponseService;
-import com.developer.patrolsimulator.model.PatchRequest;
-import com.developer.patrolsimulator.model.PatrolResponse;
-import com.developer.patrolsimulator.model.UpdatePatrolRequest;
+import com.developer.patrolsimulator.model.*;
 import com.developer.patrolsimulator.repository.UserRepository;
 import com.developer.patrolsimulator.service.MapService;
 import com.developer.patrolsimulator.service.PatrolsService;
@@ -72,15 +69,18 @@ public class PatrolController {
         return ResponseEntity.ok(_patrolService.getAllPatrolsByUserEntity(userKey));
     }
 
-    @PostMapping("/maps/{mapKey}")
-    public ResponseEntity<PatrolsEntity> savePatrol(Authentication authentication, @PathVariable UUID mapKey, @RequestBody PatrolsEntity entity){
+    @PostMapping
+    public ResponseEntity<PatrolsEntity> savePatrol(Authentication authentication, @RequestBody PatrolCreateRequest patrol){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/patrol/save").toUriString());
-        entity.setPatrolKey(UUID.randomUUID());
-        MapEntity map = _mapService.getByMapKey(mapKey);
+
+        PatrolsEntity newPatrol = new PatrolsEntity();
+        newPatrol.setPatrolKey(UUID.randomUUID());
+
+        MapEntity map = _mapService.getByMapKey(patrol.getMapKey());
         if (map != null)
         {
-            map.getPatrols().add(entity);
-            entity.setMapEntity(map);
+            map.getPatrols().add(newPatrol);
+            newPatrol.setMapEntity(map);
         }
 
         Optional<UserEntity> user = null;
@@ -90,11 +90,11 @@ public class PatrolController {
 
         if (user.isPresent())
         {
-            user.get().getPatrols().add(entity);
-            entity.setUserEntity(user.get());
+            user.get().getPatrols().add(newPatrol);
+            newPatrol.setUserEntity(user.get());
         }
 
-        return ResponseEntity.created(uri).body(_patrolService.save(entity));
+        return ResponseEntity.created(uri).body(_patrolService.save(newPatrol));
     }
 
     @PutMapping("/{patrolKey}/patch")

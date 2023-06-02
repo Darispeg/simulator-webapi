@@ -1,9 +1,11 @@
 package com.developer.patrolsimulator.controller;
 
 import com.developer.patrolsimulator.db.entities.PatrolTaskEntity;
+import com.developer.patrolsimulator.db.entities.PatrolsEntity;
 import com.developer.patrolsimulator.model.MappingModelResponseService;
 import com.developer.patrolsimulator.model.PatrolTaskRequest;
 import com.developer.patrolsimulator.service.PatrolTaskService;
+import com.developer.patrolsimulator.service.PatrolsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,8 @@ public class PatrolTaskController {
     @Autowired
     private MappingModelResponseService _mappingResponse;
 
+    @Autowired
+    private PatrolsService _patrolService;
 
     @GetMapping(value = "/patrol-tasks/{key}")
     public ResponseEntity<PatrolTaskEntity> getPatrolByKey(@PathVariable UUID key){
@@ -33,7 +37,13 @@ public class PatrolTaskController {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/patrol-task").toUriString());
         PatrolTaskEntity entity = _mappingResponse.buildPatrolTaskEntity(task);
         entity.setTaskKey(UUID.randomUUID());
-        System.out.println(task.isPD());
+
+        PatrolsEntity patrol = _patrolService.getByPatrolKey(patrolKey);
+        if (patrol != null){
+            patrol.setTotalSeconds(task.getTime());
+            _patrolService.save(patrol);
+        }
+
         return ResponseEntity.created(uri).body(taskService.savePatrolTask(entity, patrolKey));
     }
 }

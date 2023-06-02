@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface UserService extends GenericService<UserEntity, Long> {
+    UserEntity createUser(UserEntity userEntity);
     UserEntity getByUserKey(UUID userKey);
     UserEntity getByUsernameAndPassword(String username, String password);
     List<UserEntity> getAllByOrderByLastNameAsc();

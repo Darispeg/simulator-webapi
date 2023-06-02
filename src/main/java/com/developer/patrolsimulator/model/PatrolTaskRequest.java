@@ -23,4 +23,5 @@ public class PatrolTaskRequest {
     private boolean PD;
     private boolean TARGET;
     private boolean PRDO;
+    private int time;
 }

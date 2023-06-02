@@ -54,7 +54,7 @@ public class UserController {
     public ResponseEntity<UserResponse> saveUser(@RequestBody UserEntity entity){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/users/save").toUriString());
         entity.setUserKey(UUID.randomUUID());
-        return ResponseEntity.created(uri).body(mapping.buildUser(_service.save(entity)));
+        return ResponseEntity.created(uri).body(mapping.buildUser(_service.createUser(entity)));
     }
 
     @PostMapping("{id}/patrol")

@@ -18,7 +18,6 @@ public class TokenUtils {
     public static String createToken(UserDetailImpl userDetail){
         long expirationTime = ACCESS_TOKEN_VALIDITY_SECONDS * 1000;
         Date expirationDate = new Date(System.currentTimeMillis() + expirationTime);
-        System.out.println(key.getEncoded());
         Map<String, Object> extra = new HashMap<>();
         extra.put("user", userDetail);
         return Jwts.builder()
