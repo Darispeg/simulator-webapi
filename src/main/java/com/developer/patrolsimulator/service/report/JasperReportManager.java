@@ -28,7 +28,7 @@ public class JasperReportManager {
     public ByteArrayOutputStream export(String fileName, String typeReport, Map<String, Object> params,
                                         Connection con) throws JRException, IOException {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        ClassPathResource resource = new ClassPathResource("reports/patrols-report.jasper");
+        ClassPathResource resource = new ClassPathResource("/reports/patrols-report.jasper");
 
         InputStream inputStream = resource.getInputStream();
         JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, params, con);
