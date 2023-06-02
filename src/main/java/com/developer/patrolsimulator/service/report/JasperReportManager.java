@@ -22,13 +22,13 @@ import java.util.Map;
 @Component
 public class JasperReportManager {
 
-    private static final String REPORT_FOLDER = "src/main/resources/reports";
+    private static final String REPORT_FOLDER = "reports";
     private static final String JASPER = ".jasper";
 
     public ByteArrayOutputStream export(String fileName, String typeReport, Map<String, Object> params,
                                         Connection con) throws JRException, IOException {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        ClassPathResource resource = new ClassPathResource(REPORT_FOLDER + File.separator + fileName + JASPER);
+        ClassPathResource resource = new ClassPathResource("reports/patrols-report.jasper");
 
         InputStream inputStream = resource.getInputStream();
         JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, params, con);
