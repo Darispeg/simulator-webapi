@@ -22,7 +22,7 @@ import java.util.Map;
 @Component
 public class JasperReportManager {
 
-    private static final String REPORT_FOLDER = "reports";
+    private static final String REPORT_FOLDER = "src/main/resources/reports";
     private static final String JASPER = ".jasper";
 
     public ByteArrayOutputStream export(String fileName, String typeReport, Map<String, Object> params,
