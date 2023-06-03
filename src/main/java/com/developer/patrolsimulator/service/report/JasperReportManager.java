@@ -12,7 +12,10 @@ import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.util.Map;
 
@@ -25,10 +28,9 @@ public class JasperReportManager {
     public ByteArrayOutputStream export(String fileName, String typeReport, Map<String, Object> params,
                                         Connection con) throws JRException, IOException {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        ClassPathResource resource = new ClassPathResource(REPORT_FOLDER + File.separator + fileName + JASPER);
 
-        String jasperFilePath = REPORT_FOLDER + File.separator + fileName + JASPER;
-        InputStream inputStream = new FileInputStream(jasperFilePath);
-
+        InputStream inputStream = resource.getInputStream();
         JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, params, con);
 
         if (typeReport.equalsIgnoreCase(TypeReportEnum.EXCEL.toString())){
