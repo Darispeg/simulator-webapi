@@ -54,8 +54,7 @@ public class PatrolTaskServiceImpl extends GenericServiceImpl<PatrolTaskEntity, 
         score = (taskEntity.isClover()) ? score + 1 : score;
         score = (taskEntity.isPd()) ? score + 1 : score;
         score = (taskEntity.isTarget()) ? score + 1 : score;
-        score = (taskEntity.isPrdo()) ? score + 1 : score;
-        score = score / 6;
+        score = score / 5;
         return score;
     }
 
