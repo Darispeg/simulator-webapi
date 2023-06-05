@@ -21,6 +21,15 @@ public class CorsConfig {
                 registry.addMapping("/api/**")
                         .allowedOrigins("http://localhost:4200")
                         .allowedMethods("*");
+
+                registry.addMapping("/login")
+                        .allowedOrigins("https://647d67ec78dbed275a7a34de--mellifluous-parfait-83bfcb.netlify.app")
+                        .allowedMethods("*")
+                        .exposedHeaders("*");
+
+                registry.addMapping("/api/**")
+                        .allowedOrigins("https://647d67ec78dbed275a7a34de--mellifluous-parfait-83bfcb.netlify.app")
+                        .allowedMethods("*");
             }
         };
     }
