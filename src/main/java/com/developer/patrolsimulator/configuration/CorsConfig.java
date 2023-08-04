@@ -13,23 +13,10 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/login")
+                registry.addMapping("/**")
                                 .allowedOrigins("http://localhost:4200")
                                         .allowedMethods("*")
                                                 .exposedHeaders("*");
-
-                registry.addMapping("/api/**")
-                        .allowedOrigins("http://localhost:4200")
-                        .allowedMethods("*");
-
-                registry.addMapping("/login")
-                        .allowedOrigins("https://647d67ec78dbed275a7a34de--mellifluous-parfait-83bfcb.netlify.app")
-                        .allowedMethods("*")
-                        .exposedHeaders("*");
-
-                registry.addMapping("/api/**")
-                        .allowedOrigins("https://647d67ec78dbed275a7a34de--mellifluous-parfait-83bfcb.netlify.app")
-                        .allowedMethods("*");
             }
         };
     }
