@@ -17,6 +17,11 @@ public class CorsConfig {
                                 .allowedOrigins("http://localhost:4200")
                                         .allowedMethods("*")
                                                 .exposedHeaders("*");
+
+                registry.addMapping("/**")
+                                .allowedOrigins("https://webapp-patrol-simulator.netlify.app")
+                                    .allowedMethods("*")
+                                        .exposedHeaders("*");
             }
         };
     }
